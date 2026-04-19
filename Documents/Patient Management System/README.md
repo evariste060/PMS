@@ -17,7 +17,7 @@ A web-based hospital patient management system built with Java Servlets, JSP, an
 | Layer      | Technology                        |
 |------------|-----------------------------------|
 | Backend    | Java 17, Jakarta Servlets, JSP    |
-| Frontend   | HTML, CSS, JavaScript (JSTL)      |
+| Frontend   | HTML, Tailwindcss, JavaScript (JSTL)      |
 | Database   | MySQL 8                           |
 | Build      | Maven (WAR packaging)             |
 | Server     | Apache Tomcat 10                  |
@@ -133,8 +133,14 @@ Please open an **Issue** if you find a bug or have a suggestion for improvement.
 - No REST API (pure Servlet/JSP MVC only)
 - No unit/integration test coverage yet
 
-## Author
+## Team Members
 
-**Evariste Nkurunziza**  
-University of Rwanda  
-nkurunziza_224003322@stud.ur.ac.rw
+| Name                  | Role            | Reg Number       |
+|-----------------------|-----------------|------------------|
+| Evariste Nkurunziza   | Team Lead / Backend | 224003322    |
+| Member 2              | Frontend        | -                |
+| Member 3              | Database        | -                |
+| Member 4              | Backend         | -                |
+| Member 5              | Frontend        | -                |
+
+> University of Rwanda
