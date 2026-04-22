@@ -19,7 +19,7 @@
 
     <%@ include file="/WEB-INF/views/includes/sidebar.jsp" %>
 
-    <main class="flex-1 ml-64">
+    <main class="flex-1 ml-64 min-w-0">
         <header class="bg-white shadow-sm px-8 py-4 flex items-center gap-3 sticky top-0 z-10">
             <a href="${pageContext.request.contextPath}/admin/doctors" class="text-gray-400 hover:text-gray-600 transition">
                 <i class="fas fa-arrow-left"></i>

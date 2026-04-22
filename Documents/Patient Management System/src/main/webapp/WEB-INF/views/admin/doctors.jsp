@@ -19,7 +19,7 @@
 
     <%@ include file="/WEB-INF/views/includes/sidebar.jsp" %>
 
-    <main class="flex-1 ml-64">
+    <main class="flex-1 ml-64 min-w-0">
         <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between sticky top-0 z-10">
             <div>
                 <h1 class="text-xl font-bold text-gray-800">Doctors</h1>
@@ -50,6 +50,7 @@
                                 <th class="px-6 py-3 text-left font-semibold">Email</th>
                                 <th class="px-6 py-3 text-left font-semibold">Phone</th>
                                 <th class="px-6 py-3 text-left font-semibold">Address</th>
+                                <th class="px-6 py-3 text-left font-semibold">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
@@ -62,7 +63,8 @@
                                 </c:when>
                                 <c:otherwise>
                                     <c:forEach items="${doctors}" var="d" varStatus="s">
-                                        <tr class="hover:bg-gray-50 transition-colors">
+                                        <tr class="hover:bg-blue-50 transition-colors cursor-pointer"
+                                            onclick="location.href='${pageContext.request.contextPath}/admin/doctor-detail?id=${d.doctorID}'">
                                             <td class="px-6 py-4 text-gray-400">${s.count}</td>
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center gap-3">
@@ -78,6 +80,13 @@
                                             <td class="px-6 py-4 text-gray-500">${d.email}</td>
                                             <td class="px-6 py-4 text-gray-500">${d.telephone}</td>
                                             <td class="px-6 py-4 text-gray-500 max-w-xs truncate">${d.address}</td>
+                                            <td class="px-6 py-4">
+                                                <a href="${pageContext.request.contextPath}/admin/doctor-detail?id=${d.doctorID}"
+                                                   onclick="event.stopPropagation()"
+                                                   class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition">
+                                                    <i class="fas fa-eye"></i> View Nurses
+                                                </a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </c:otherwise>

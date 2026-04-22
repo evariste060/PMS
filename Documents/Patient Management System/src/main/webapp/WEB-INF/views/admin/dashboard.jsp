@@ -19,7 +19,7 @@
 
     <%@ include file="/WEB-INF/views/includes/sidebar.jsp" %>
 
-    <main class="flex-1 ml-64">
+    <main class="flex-1 ml-64 min-w-0">
         <!-- Top bar -->
         <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between sticky top-0 z-10">
             <div>
@@ -42,34 +42,47 @@
             </c:if>
 
             <!-- Stat cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <a href="${pageContext.request.contextPath}/admin/doctors"
+                   class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all">
                     <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-user-doctor text-blue-600 text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-gray-400 text-sm">Total Doctors</p>
+                        <p class="text-gray-400 text-sm">Doctors</p>
                         <p class="text-3xl font-extrabold text-gray-800">${doctorCount}</p>
                     </div>
-                </div>
-                <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100">
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/nurses"
+                   class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all">
                     <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-user-nurse text-teal-600 text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-gray-400 text-sm">Total Nurses</p>
+                        <p class="text-gray-400 text-sm">Nurses</p>
                         <p class="text-3xl font-extrabold text-gray-800">${nurseCount}</p>
                     </div>
-                </div>
-                <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100">
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/patients"
+                   class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-bed-pulse text-orange-500 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Patients</p>
+                        <p class="text-3xl font-extrabold text-gray-800">${patientCount}</p>
+                    </div>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/diagnoses"
+                   class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5 border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all">
                     <div class="w-14 h-14 bg-violet-100 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i class="fas fa-notes-medical text-violet-600 text-2xl"></i>
                     </div>
                     <div>
-                        <p class="text-gray-400 text-sm">Total Cases</p>
+                        <p class="text-gray-400 text-sm">Diagnoses</p>
                         <p class="text-3xl font-extrabold text-gray-800">${diagnosisCount}</p>
                     </div>
-                </div>
+                </a>
             </div>
 
             <!-- Doctors table -->
@@ -77,6 +90,7 @@
                 <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
                     <h2 class="font-bold text-gray-800 flex items-center gap-2">
                         <i class="fas fa-user-doctor text-blue-500"></i> Registered Doctors
+                        <span class="text-xs text-gray-400 font-normal ml-1">— click a row to view assigned nurses</span>
                     </h2>
                     <a href="${pageContext.request.contextPath}/admin/add-doctor"
                        class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-2 transition">
@@ -92,13 +106,14 @@
                                 <th class="px-6 py-3 text-left font-semibold">Hospital</th>
                                 <th class="px-6 py-3 text-left font-semibold">Email</th>
                                 <th class="px-6 py-3 text-left font-semibold">Phone</th>
+                                <th class="px-6 py-3 text-left font-semibold">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <c:choose>
                                 <c:when test="${empty doctors}">
                                     <tr>
-                                        <td colspan="5" class="text-center py-12 text-gray-400">
+                                        <td colspan="6" class="text-center py-12 text-gray-400">
                                             <i class="fas fa-user-doctor text-4xl mb-3 block opacity-30"></i>
                                             No doctors registered yet.
                                         </td>
@@ -106,7 +121,8 @@
                                 </c:when>
                                 <c:otherwise>
                                     <c:forEach items="${doctors}" var="d" varStatus="s">
-                                        <tr class="hover:bg-gray-50 transition-colors">
+                                        <tr class="hover:bg-blue-50 transition-colors cursor-pointer"
+                                            onclick="location.href='${pageContext.request.contextPath}/admin/doctor-detail?id=${d.doctorID}'">
                                             <td class="px-6 py-4 text-gray-400">${s.count}</td>
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center gap-3">
@@ -119,6 +135,13 @@
                                             <td class="px-6 py-4 text-gray-600">${d.hospitalName}</td>
                                             <td class="px-6 py-4 text-gray-500">${d.email}</td>
                                             <td class="px-6 py-4 text-gray-500">${d.telephone}</td>
+                                            <td class="px-6 py-4">
+                                                <a href="${pageContext.request.contextPath}/admin/doctor-detail?id=${d.doctorID}"
+                                                   onclick="event.stopPropagation()"
+                                                   class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition">
+                                                    <i class="fas fa-eye"></i> View Nurses
+                                                </a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </c:otherwise>
@@ -127,6 +150,7 @@
                     </table>
                 </div>
             </div>
+
         </div>
     </main>
 </div>

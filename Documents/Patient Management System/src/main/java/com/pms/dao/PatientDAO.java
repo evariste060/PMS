@@ -83,4 +83,25 @@ public class PatientDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return 0;
     }
+
+    public List<Patient> getAll() {
+        List<Patient> list = new ArrayList<>();
+        String sql = "SELECT * FROM Patients ORDER BY firstName";
+        try (Connection c = DBConnection.getConnection();
+             Statement st = c.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) list.add(map(rs));
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public int countAll() {
+        String sql = "SELECT COUNT(*) FROM Patients";
+        try (Connection c = DBConnection.getConnection();
+             Statement st = c.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) { e.printStackTrace(); }
+        return 0;
+    }
 }

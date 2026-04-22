@@ -22,11 +22,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
-        /* if already logged in, go straight to dashboard */
         HttpSession session = req.getSession(false);
         if (session != null && session.getAttribute("loggedUser") != null) {
-            redirectByRole(req, res, (User) session.getAttribute("loggedUser"));
-            return;
+            User user = (User) session.getAttribute("loggedUser");
+            boolean profileReady = switch (user.getUserType()) {
+                case "Doctor"  -> session.getAttribute("loggedDoctor")  != null;
+                case "Nurse"   -> session.getAttribute("loggedNurse")   != null;
+                case "Patient" -> session.getAttribute("loggedPatient") != null;
+                default        -> true;
+            };
+            if (profileReady) {
+                redirectByRole(req, res, user);
+                return;
+            }
+            /* stale session — profile attribute missing; start fresh */
+            session.invalidate();
         }
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, res);
     }
@@ -49,9 +59,36 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("loggedUser", user);
 
         switch (user.getUserType()) {
-            case "Doctor"  -> session.setAttribute("loggedDoctor",  doctorDAO.getByUserID(user.getUserID()));
-            case "Nurse"   -> session.setAttribute("loggedNurse",   nurseDAO.getByUserID(user.getUserID()));
-            case "Patient" -> session.setAttribute("loggedPatient", patientDAO.getByUserID(user.getUserID()));
+            case "Doctor" -> {
+                var doctor = doctorDAO.getByUserID(user.getUserID());
+                if (doctor == null) {
+                    session.invalidate();
+                    req.setAttribute("error", "Doctor profile not found. Ask the administrator to re-register this account.");
+                    req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, res);
+                    return;
+                }
+                session.setAttribute("loggedDoctor", doctor);
+            }
+            case "Nurse" -> {
+                var nurse = nurseDAO.getByUserID(user.getUserID());
+                if (nurse == null) {
+                    session.invalidate();
+                    req.setAttribute("error", "Nurse profile not found. Ask your supervising doctor to re-register this account.");
+                    req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, res);
+                    return;
+                }
+                session.setAttribute("loggedNurse", nurse);
+            }
+            case "Patient" -> {
+                var patient = patientDAO.getByUserID(user.getUserID());
+                if (patient == null) {
+                    session.invalidate();
+                    req.setAttribute("error", "Patient profile not found. Ask your nurse to re-register this account.");
+                    req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, res);
+                    return;
+                }
+                session.setAttribute("loggedPatient", patient);
+            }
         }
 
         redirectByRole(req, res, user);

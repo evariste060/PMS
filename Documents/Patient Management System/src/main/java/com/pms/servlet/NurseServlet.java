@@ -24,6 +24,12 @@ public class NurseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         Nurse nurse = loggedNurse(req);
+        if (nurse == null) {
+            HttpSession s = req.getSession(false);
+            if (s != null) s.invalidate();
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
         switch (action(req)) {
             case "dashboard"     -> dashboard(req, res, nurse);
             case "patients"      -> patients(req, res, nurse);
@@ -37,10 +43,21 @@ public class NurseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         Nurse nurse = loggedNurse(req);
-        switch (action(req)) {
-            case "add-patient"   -> addPatient(req, res, nurse);
-            case "add-diagnosis" -> addDiagnosis(req, res, nurse);
-            default              -> res.sendRedirect(req.getContextPath() + "/nurse/dashboard");
+        if (nurse == null) {
+            HttpSession s = req.getSession(false);
+            if (s != null) s.invalidate();
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+        try {
+            switch (action(req)) {
+                case "add-patient"   -> addPatient(req, res, nurse);
+                case "add-diagnosis" -> addDiagnosis(req, res, nurse);
+                default              -> res.sendRedirect(req.getContextPath() + "/nurse/dashboard");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.sendRedirect(req.getContextPath() + "/nurse/dashboard");
         }
     }
 

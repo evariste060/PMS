@@ -24,13 +24,27 @@
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors text-sm font-medium">
                     <i class="fas fa-gauge w-5 text-center text-slate-400"></i> Dashboard
                 </a>
+                <p class="text-slate-500 text-xs font-semibold uppercase px-3 pt-3 pb-1 tracking-wider">Staff</p>
                 <a href="${pageContext.request.contextPath}/admin/doctors"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors text-sm font-medium">
                     <i class="fas fa-user-doctor w-5 text-center text-slate-400"></i> Doctors
                 </a>
+                <a href="${pageContext.request.contextPath}/admin/nurses"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors text-sm font-medium">
+                    <i class="fas fa-user-nurse w-5 text-center text-slate-400"></i> Nurses
+                </a>
                 <a href="${pageContext.request.contextPath}/admin/add-doctor"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors text-sm font-medium">
                     <i class="fas fa-user-plus w-5 text-center text-slate-400"></i> Add Doctor
+                </a>
+                <p class="text-slate-500 text-xs font-semibold uppercase px-3 pt-3 pb-1 tracking-wider">Records</p>
+                <a href="${pageContext.request.contextPath}/admin/patients"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors text-sm font-medium">
+                    <i class="fas fa-bed-pulse w-5 text-center text-slate-400"></i> Patients
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/diagnoses"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-colors text-sm font-medium">
+                    <i class="fas fa-notes-medical w-5 text-center text-slate-400"></i> Diagnoses
                 </a>
             </c:when>
 

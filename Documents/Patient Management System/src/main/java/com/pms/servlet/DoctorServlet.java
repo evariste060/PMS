@@ -20,6 +20,12 @@ public class DoctorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         Doctor doctor = loggedDoctor(req);
+        if (doctor == null) {
+            HttpSession s = req.getSession(false);
+            if (s != null) s.invalidate();
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
         switch (action(req)) {
             case "dashboard"  -> dashboard(req, res, doctor);
             case "nurses"     -> nurses(req, res, doctor);
@@ -33,8 +39,19 @@ public class DoctorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         Doctor doctor = loggedDoctor(req);
-        if ("add-nurse".equals(action(req))) addNurse(req, res, doctor);
-        else res.sendRedirect(req.getContextPath() + "/doctor/dashboard");
+        if (doctor == null) {
+            HttpSession s = req.getSession(false);
+            if (s != null) s.invalidate();
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+        try {
+            if ("add-nurse".equals(action(req))) addNurse(req, res, doctor);
+            else res.sendRedirect(req.getContextPath() + "/doctor/dashboard");
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.sendRedirect(req.getContextPath() + "/doctor/dashboard");
+        }
     }
 
     /* ── pages ── */

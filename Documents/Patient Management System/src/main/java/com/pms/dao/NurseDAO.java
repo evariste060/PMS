@@ -93,4 +93,15 @@ public class NurseDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return 0;
     }
+
+    public List<Nurse> getAll() {
+        List<Nurse> list = new ArrayList<>();
+        String sql = "SELECT * FROM Nurses ORDER BY firstName";
+        try (Connection c = DBConnection.getConnection();
+             Statement st = c.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) list.add(map(rs));
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
 }
