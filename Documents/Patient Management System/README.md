@@ -192,16 +192,7 @@ Users ──┬── Doctors ──── Nurses ──── Patients
 - `Users` is the master auth table; each role has a linked profile table.
 - `Diagnosis` links a Patient, a Nurse (who recorded it), and optionally a Doctor (if referrable).
 
----
 
-## Known Limitations / Areas for Improvement
-
-- Passwords are hashed with MD5 — consider upgrading to bcrypt
-- No email notifications yet
-- No REST API (pure Servlet/JSP MVC only)
-- No unit/integration test coverage yet
-
----
 
 ## Team Members
 
