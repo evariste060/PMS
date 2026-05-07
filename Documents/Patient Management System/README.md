@@ -205,12 +205,13 @@ Users ──┬── Doctors ──── Nurses ──── Patients
 
 ## Team Members
 
-| Name                  | Role                | Reg Number  |
-|-----------------------|---------------------|-------------|
-| Evariste Nkurunziza   | Team Lead / Backend | 224003322   |
-| Member 2              | Frontend            | -           |
-| Member 3              | Database            | -           |
-| Member 4              | Backend             | -           |
-| Member 5              | Frontend            | -           |
+| Name                             | Role                | Reg Number |
+| -------------------------------- | ------------------- | ---------- |
+| Evariste Nkurunziza              | Team Lead / Backend | 224003322  |
+| Kenny Bonheur                    | Frontend            | 224014021  |
+| Benimana Betty                   | Database            | 224011562  |
+| BISERUKA BAHATI Derrick          | Backend             | 224006886  |
+| Mugenga Mugisha benoit christian | Frontend            | 224011579  |
+
 
 > University of Rwanda
